@@ -39,15 +39,20 @@ table() {
   column -o " | " -ts \; /banner-data
 }
 
+FIGLET_TEXT="${NAME} v${VERSION}"
+
 banner_width() {
   WIDTH=$(table|tail -1|wc -c)
-  echo $((WIDTH-1))
+  while [[ $(figlet -w ${WIDTH} "${FIGLET_TEXT}" | wc -l) -gt 6 ]]; do
+    WIDTH=$((WIDTH+1))
+  done
+  echo ${WIDTH}
 }
 
 
 WIDTH=$(banner_width)
 LINE=$(seq -s'-' 0 ${WIDTH} | tr -d '[:digit:]')
-figlet -w ${WIDTH} -c -s "${NAME} v${VERSION}"
+figlet -w ${WIDTH} -c -s "${FIGLET_TEXT}"
 echo -e -n ${BLUE}
 echo $LINE
 echo -e -n ${RESET}
