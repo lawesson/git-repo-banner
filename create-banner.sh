@@ -43,10 +43,11 @@ FIGLET_TEXT="${NAME} v${VERSION}"
 
 banner_width() {
   WIDTH=$(table|tail -1|wc -c)
+  WIDTH=$((WIDTH-1))
   while [[ $(figlet -w ${WIDTH} "${FIGLET_TEXT}" | wc -l) -gt 6 ]]; do
     WIDTH=$((WIDTH+1))
   done
-  echo $((WIDTH-1))
+  echo ${WIDTH}
 }
 
 
